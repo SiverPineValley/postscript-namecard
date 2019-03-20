@@ -1,0 +1,68 @@
+%!
+/x 250 def
+/y 150 def
+
+
+% Draw one box. PARAMETER: ( X, Y ) : length of box
+/box
+{
+    0 0 moveto
+    % Y 이동
+    dup
+    0 exch rlineto
+
+    % X 이동
+    exch
+    0 rlineto
+
+    % -Y 이동
+    -1 mul
+    0 exch rlineto
+    closepath
+    stroke
+} def
+
+% Draw one box. PARAMETER: ( X, Y ) : length of box
+/drawString
+{
+    x y
+    exch 0.45 mul % X
+    exch 0.5 mul % Y
+    /Courier-BoldOblique findfont
+    10 scalefont
+    setfont
+    moveto
+    (POSTSCRIPT PROGRAMMER)
+    show
+
+    x y
+    exch 0.5 mul % X
+    exch 0.4 mul % Y
+    /Courier-BoldOblique findfont
+    13 scalefont
+    setfont
+    moveto
+    (Jong-in Park)
+    show
+
+} def
+
+% Draw one namecard.
+/nameCard
+{
+    % Draw box
+    gsave
+    x y box
+    grestore
+
+    % Draw Curtain
+
+    % Draw String
+    gsave
+    drawString
+    grestore
+
+    showpage
+} def
+
+nameCard

@@ -1,11 +1,14 @@
 %!
 /x 250 def
 /y 150 def
-
+/handlength { y 0.3 mul } def
+/current { currentpoint moveto } def
 
 % Draw one box. PARAMETER: ( X, Y ) : length of box
 /box
 {
+    1 setlinejoin
+    1 setlinecap
     x y
     0 0 moveto
     % Y 이동
@@ -58,7 +61,7 @@
     stroke
 } def
 
-% Draw one box. PARAMETER: ( X, Y ) : length of box
+% Draw String
 /drawString
 {
     x y
@@ -104,14 +107,117 @@
 
 } def
 
-/drawCircle
+/drawhand
 {
+    0 0.5 1 setrgbcolor
+    1 setlinecap
+    3 setlinewidth
     
+    % First Branch
+    handlength 0.3 mul 0 rlineto
+    current
+    gsave
+    2 setlinewidth
+    -45 rotate
+    handlength 0.2 mul 0 rlineto
+    stroke
+    grestore gsave
+    2 setlinewidth
+    45 rotate
+    handlength 0.2 mul 0 rlineto
+    stroke
+    grestore
+
+    % Second Branch
+    handlength 0.2 mul 0 rlineto
+    current
+    gsave
+    2 setlinewidth
+    -45 rotate
+    handlength 0.15 mul 0 rlineto
+    stroke
+    grestore gsave
+    2 setlinewidth
+    45 rotate
+    handlength 0.15 mul 0 rlineto
+    stroke
+    grestore gsave
+    1 setlinewidth
+    90 rotate
+    handlength 0.13 mul 0 rlineto
+    stroke
+    grestore gsave
+    1 setlinewidth
+    -90 rotate
+    handlength 0.13 mul 0 rlineto
+    stroke
+    grestore
+
+    % Third Branch
+    handlength 0.15 mul 0 rlineto
+    current
+    gsave
+    2 setlinewidth
+    -45 rotate
+    handlength 0.075 mul 0 rlineto
+    stroke
+    grestore gsave
+    2 setlinewidth
+    45 rotate
+    handlength 0.075 mul 0 rlineto
+    stroke
+    grestore
+
+    handlength 0.075 mul 0 rlineto
+
+    stroke
+} def
+
+/drawhexagon
+{
+    0 0.5 1 setrgbcolor
+    1 setlinecap
+    2 setlinewidth
+    dup 0 rlineto
+
+    120 rotate
+    0 rlineto
+    stroke
+} def
+
+/drawPattern
+{   
+    % Move the origin
+    /origin
+    {
+        x 0.25 mul
+        y 0.4 mul
+        moveto
+        30 rotate
+    } def
+    origin
+
+    0 60 359
+    {
+        dup dup
+        gsave
+        rotate
+        drawhand
+        grestore gsave
+        rotate
+        handlength 0.25 mul drawhexagon
+        grestore gsave
+        rotate
+        0.67 0.67 scale
+        handlength 0.25 mul drawhexagon
+        grestore
+    } for
 } def
 
 % Draw one namecard.
 /nameCard
 {
+    gsave
     % Draw box
     box
 
@@ -121,10 +227,29 @@
     % Draw String
     drawString
 
-    % Draw Circle
-    drawCircle
+    % Draw Pattern
+    drawPattern
+    grestore
+} def
+
+/sixnameCards
+{
+    50 200 translate
+    0 1 2
+    {
+        dup
+        gsave
+        
+        y mul 0 exch translate
+        nameCard
+        grestore gsave
+
+        y mul x 1 add exch translate
+        nameCard
+        grestore
+    } for
 
     showpage
 } def
 
-nameCard
+sixnameCards

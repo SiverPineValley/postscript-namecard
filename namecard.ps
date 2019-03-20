@@ -6,6 +6,7 @@
 % Draw one box. PARAMETER: ( X, Y ) : length of box
 /box
 {
+    x y
     0 0 moveto
     % Y 이동
     dup
@@ -19,6 +20,41 @@
     -1 mul
     0 exch rlineto
     closepath
+
+    gsave
+    1 0 0 setrgbcolor   
+    fill
+    grestore
+    stroke
+} def
+
+% Draw one box. PARAMETER: ( X, Y ) : length of box
+/drawCurtain
+{
+    /getendx
+    { x 20 sub 4 div } def
+    /getendy
+    { y 0.85 mul } def
+    getendy
+    10 0 moveto
+    0 exch rlineto
+    
+    1 1 4
+    {
+    pop   
+    currentpoint -10 add
+    currentpoint exch getendx add exch -10 add
+    currentpoint exch getendx add exch
+    curveto
+    } for
+
+    0 getendy -1 mul rlineto
+    closepath
+
+    gsave
+    1 1 1 setrgbcolor   
+    fill
+    grestore
     stroke
 } def
 
@@ -26,7 +62,7 @@
 /drawString
 {
     x y
-    exch 0.45 mul % X
+    exch 0.44 mul % X
     exch 0.5 mul % Y
     /Courier-BoldOblique findfont
     10 scalefont
@@ -34,6 +70,7 @@
     moveto
     (POSTSCRIPT PROGRAMMER)
     show
+    
 
     x y
     exch 0.5 mul % X
@@ -45,22 +82,47 @@
     (Jong-in Park)
     show
 
+    x y
+    exch 0.5 mul % X
+    exch 0.3 mul % Y
+    /Courier-BoldOblique findfont
+    9 scalefont
+    setfont
+    moveto
+    (Software Engineering)
+    show
+
+    x y
+    exch 0.5 mul % X
+    exch 0.25 mul % Y
+    /Courier-BoldOblique findfont
+    9 scalefont
+    setfont
+    moveto  
+    (Ajou Univ)
+    show
+
+} def
+
+/drawCircle
+{
+    
 } def
 
 % Draw one namecard.
 /nameCard
 {
     % Draw box
-    gsave
-    x y box
-    grestore
+    box
 
     % Draw Curtain
+    drawCurtain
 
     % Draw String
-    gsave
     drawString
-    grestore
+
+    % Draw Circle
+    drawCircle
 
     showpage
 } def

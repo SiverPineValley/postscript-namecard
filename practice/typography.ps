@@ -1,0 +1,20 @@
+%!
+/box
+{
+    moveto
+    0 100 rlineto
+    100 0 rlineto
+    0 -100 rlineto
+    closepath
+    stroke
+} def
+
+0 1 1 setrgbcolor
+/Courier-BoldOblique findfont
+30 scalefont
+setfont
+72 200 moveto
+(Jong-in Park) show
+0 0 0 setrgbcolor
+0 1 400 {dup 400 div setgray dup box} for
+showpage

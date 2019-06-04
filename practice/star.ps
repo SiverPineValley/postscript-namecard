@@ -1,0 +1,37 @@
+%/
+/starside
+{
+    144 0 lineto             % add line to path
+    currentpoint translate  % rotate coord. sys. currentpoint는 현재를 원위치.
+    -144 rotate
+} def
+
+/star
+{
+    moveto
+    currentpoint translate
+    4 {starside} repeat
+    closepath
+    gsave
+    .5 setgray fill
+    grestore
+    stroke
+} def
+
+/eostar
+{
+    moveto
+    currentpoint translate
+    4 {starside} repeat
+    closepath
+    gsave
+    .5 setgray eofill
+    grestore
+    stroke
+} def
+
+gsave
+200 200 star
+grestore
+300 300 eostar
+showpage
